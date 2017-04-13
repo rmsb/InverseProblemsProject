@@ -14,7 +14,7 @@ nCut = 6;
 lowPassCutoff = linspace(0.1, 0.2, nCut); % 10-25 for 512
 
 %% Load the recon
-loadcommand = ['load Recon_downsample', num2str(downscaleFactor), '_N', ...
+loadcommand = ['load data\Recon_downsample', num2str(downscaleFactor), '_N', ...
                 num2str(N), '_Ang', num2str(numAngles), ' reconLoResSparse'];
 eval(loadcommand);
 

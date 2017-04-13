@@ -16,10 +16,10 @@ N = 2048/downscaleFactor;
 numAngles = 20;
 
 %% Load data
-load LotusSinogram
+load data\LotusSinogram
 
 % Load measurement matrix A for comparing shifted sinogram and A*recon
-loadcommand = ['load A_downsample', num2str(downscaleFactor), '_N', ...
+loadcommand = ['load data\A_downsample', num2str(downscaleFactor), '_N', ...
                num2str(N), '_Ang', num2str(numAngles), ' A'];
 eval(loadcommand);
 
@@ -153,11 +153,11 @@ colorbar
 
 %% Save in the same format as the measurement matrix
 % Save the sparse sinogram
-savecommand = ['save Sino_downsample', num2str(downscaleFactor), '_N', ...
+savecommand = ['save data\Sino_downsample', num2str(downscaleFactor), '_N', ...
                 num2str(N), '_Ang', num2str(numAngles), ' sinoShifted'];
 eval(savecommand);
 
 % Save the sparse reconstruction
-savecommand = ['save Recon_downsample', num2str(downscaleFactor), '_N', ...
+savecommand = ['save data\Recon_downsample', num2str(downscaleFactor), '_N', ...
                 num2str(N), '_Ang', num2str(numAngles), ' reconLoResSparse'];
 eval(savecommand);

@@ -44,7 +44,7 @@ matrix_id = astra_mex_projector('matrix', proj_id);
 A = astra_mex_matrix('get', matrix_id);
 
 % Save the system matrix A as a file
-eval(['save A_downsample',num2str(f),'_N',num2str(N),'_Ang',num2str(numAngles), ' A'])
+eval(['save data\A_downsample',num2str(f),'_N',num2str(N),'_Ang',num2str(numAngles), ' A'])
 
 % % Test the reconstruction using lsqr
 % P = phantom(N);
