@@ -1,5 +1,7 @@
 function [sparseSino, sparseRecon] = createSparseSinogram(sinogram, A)
-%CREATESPARSESINOGRAM Sparsifies the given sinogram data to A's dimension. 
+% CREATESPARSESINOGRAM Sparsifies the given sinogram data to A's dimension. 
+% 
+% The function does the following.
 % - Downscale the sinogram, create a sparse version and save.
 % - Create ifanbeam reconstruction and save.
 % - Shift the columns of the sinogram, so the astra matrix reconstruction

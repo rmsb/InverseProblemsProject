@@ -1,6 +1,11 @@
 classdef ReconstructionAlgorithm
     % RECONSTRUCTIONALGORITHM Projected Barzilai-Borwein algorithm object. 
-    % The algorithm object has seeded 
+    %
+    % An object of this class can be used to calculate reconstructions with
+    % the computeReconstruction() method. The system matrix, measurement 
+    % data and fstar are properties of the object that are given in the
+    % constructor. The computeReconstruction() method uses these property
+    % values in calculating the reconstruction. 
     
     properties
         fstar

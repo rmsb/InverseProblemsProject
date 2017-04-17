@@ -18,6 +18,12 @@ save('data/SystemMatrix','sysmat');
 
 %% Compute reconstructions with various values of alpha.
 % TO-DO
+fstar = zeros(sysmat.N);
+alphas = linspace(0, 100, 100);
+[dataPenalty, regularizationPenalty] = computeReconstructions(...
+    sysmat, sparseSino, fstar, alphas);
 
 %% Produce the L-curve. 
-% TO-DO
+figure();
+plot(dataPenalty, regularizationPenalty);
+

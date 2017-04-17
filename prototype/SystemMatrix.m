@@ -1,6 +1,10 @@
 classdef SystemMatrix
     %SYSTEMMATRIX Tomographic measurement matrix object. 
-    %   Detailed explanation goes here
+    %
+    % Objects of this class create the system matrix for tomographical 
+    % imaging using the fanbeam geometry of the device at the Physicum lab.
+    % The constructor is given the properties of the setting and the system
+    % matrix is constructed automatically using the ASTRA toolbox. 
     
     properties
         Matrix

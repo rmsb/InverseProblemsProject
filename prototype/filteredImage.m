@@ -1,9 +1,11 @@
 function filtered = filteredImage(recon, radius, cutoff) 
-%filteredImage applies predefined filters to a given pixel image. 
-% Project to non-negative
+% FILTEREDIMAGE applies predefined filters to a given pixel image. 
+
+% Project values to the non-negative half. 
 filtered = max(recon, 0);
 
-% Apply circular median filter
+% Apply circular median filter.
+
 % This just creates a matrix with ones in a circular shape
 domain = fspecial('disk', radius) > 0;
 
