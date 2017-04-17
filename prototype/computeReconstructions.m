@@ -12,7 +12,7 @@ function [dataPenalty, regularizationPenalty] = computeReconstructions(...
 % 
 
 if isa(A, 'SystemMatrix')
-    A= A.DownscaleFactor;
+    A= A.Matrix;
 else
     error('Input argument A has to be an object of class SystemMatrix.');
 end
