@@ -14,12 +14,16 @@ classdef SystemMatrix
     end
     
     methods
-        function sm = SystemMatrix(N, Angles, DownScaleFactor)
+        function sm = SystemMatrix(N, Angles, DownScaleFactor, A)
             if nargin > 0
              sm.N = N;
              sm.Angles = Angles;
              sm.DownScaleFactor = DownScaleFactor;
-             sm.Matrix = sm.calculateMatrix();
+             if nargin == 4
+                 sm.Matrix = A;
+             else
+                sm.Matrix = sm.calculateMatrix();
+             end
             end
         end
         
