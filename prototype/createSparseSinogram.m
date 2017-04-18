@@ -12,7 +12,7 @@ function [sparseSino, sparseRecon] = createSparseSinogram(sinogram, A)
 if isa(A, 'SystemMatrix')
     N = A.N;
     numAngles = A.Angles;
-    downscaleFactor = A.DownscaleFactor;
+    downscaleFactor = A.DownScaleFactor;
 else
     error('Input argument A has to be an object of class SystemMatrix.');
 end
@@ -20,13 +20,13 @@ end
 sinoLoRes = downscaleMatrix(sinogram, downscaleFactor);
 sinoLoResSparse = sinoLoRes(:, 1:360/numAngles:360);
 sparseSino = shiftSinogram(sinoLoResSparse, numAngles);
-sparseRecon = fanbeamReconstruction(sinoLoResSparse, downscaleFactor);
+sparseRecon = fanbeamReconstruction(sinoLoResSparse, A);
 save(createFilePath(N, downscaleFactor, numAngles), 'sparseSino')
 end
 
 function pathstring = createFilePath(N, f, numAngles)
 % createFilePath creates the path where the data matrix will be saved. 
-components = {'data\SparseSinogram',num2str(f),'_N',...
+components = {'data/SparseSinogram',num2str(f),'_N',...
     num2str(N),'_Ang',num2str(numAngles)};
 pathstring  = strjoin(components, '');
 end
@@ -55,31 +55,32 @@ sinoLoRes = scalingMatrix * sinogram(:);
 output = reshape(sinoLoRes, rows/downscaleFactor, cols);
 end
 
-function recon = fanbeamReconstruction(sinogram, downscaleFactor)
+function recon = fanbeamReconstruction(sinogram, sysmat)
+if isa(sysmat, 'SystemMatrix')
+    N = sysmat.N;
+    numAngles = sysmat.Angles;
+    downscaleFactor = sysmat.DownScaleFactor;
+else
+    error('Input argument A has to be an object of class SystemMatrix.');
+end
+
 % Size of detector pixel in millimeters
 pixelsize = 0.050;
-
 % Distance from X-ray source to X-ray detector in mm
 % Always has the same constant value
 Dsd = 547.8;
-
 % Distance from X-ray source to home point of translation stage in mm
 % Always has the same constant value
 b = 204.3;
-
 % Distance from home point of translation stage to position of stage in mm
 % This is a variable
 x = 250;
-
 % Distance from X-ray source to center of rotation in mm
 Dss = b + x;
-
 % Geometric magnification factor
 M = Dsd / Dss;
-
 % Effective pixel size that takes into account the geometric magnification
 effpixel = pixelsize / M;
-
 % Distance between X-ray source and center of rotation expressed in pixels
 D   = Dss / effpixel;
 
