@@ -19,7 +19,7 @@ save('data/SystemMatrix','sysmat');
 %% Compute reconstructions with various values of alpha.
 % TO-DO
 fstar = zeros(sysmat.N);
-alphas = linspace(0, 100, 100);
+alphas = ones(1);
 [dataPenalty, regularizationPenalty] = computeReconstructions(...
     sysmat, sparseSino, fstar, alphas);
 

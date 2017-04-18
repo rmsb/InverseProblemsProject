@@ -20,7 +20,7 @@ classdef ReconstructionAlgorithm
         
         function ra = ReconstructionAlgorithm(fstar, A, m, MAXITER)
             if nargin > 0
-             ra.fstar = fstar;
+             ra.fstar = fstar(:);
              ra.A = A;
              ra.AtA = A'*A;
              ra.Atm = A'*m;
@@ -31,9 +31,9 @@ classdef ReconstructionAlgorithm
         
         function recon = computeReconstruction(obj, alpha)
             objective = NaN(obj.MAXITER + 1, 1);
-            fold = zeros(N^2, 1);   
+            fold = zeros(numel(obj.fstar), 1);   
             gold = obj.objGradient(fold, alpha);
-            objective(1) = objective(fold, alpha);
+            objective(1) = obj.objective(fold, alpha);
             % Make the first iteration step. Theoretically, this step 
             % should satisfy the Wolfe condition, see [J.Nocedal, Acta 
             % Numerica 1992]. We use simply a constant choice since it 
@@ -43,11 +43,11 @@ classdef ReconstructionAlgorithm
             % Compute new iterate point fnew and gradient gnew at fnew
             % THE NON-NEGATIVITY PROJECTION of the first step
             fnew = max(fold - t*gold, 0);
-            gnew = objGradient(fnew, alpha);
+            gnew = obj.objGradient(fnew, alpha);
             % Iteration counter
             its = 1;
             % Record value of objective function at the new point
-            OFf = objective(fnew, alpha);
+            OFf = obj.objective(fnew, alpha);
             objective(its+1) = OFf;
             % Follow if objective function has minimal value so far
             % and save the f that produces the minimal value. The initial
@@ -67,8 +67,8 @@ classdef ReconstructionAlgorithm
                 gold = gnew;
                 % THE NON-NEGATIVITY PROJECTION
                 fnew = max(fnew - steplen*gnew,0);  
-                gnew = objGradient(fnew, alpha);
-                OFf = objective(fnew, alpha);
+                gnew = obj.objGradient(fnew, alpha);
+                OFf = obj.objective(fnew, alpha);
                 % Follow what is happening
                 objective(its+1) = OFf;
                 if (OFf < objMin)

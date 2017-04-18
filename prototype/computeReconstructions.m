@@ -18,7 +18,7 @@ else
 end
 
 m = sinogram(:);
-MAXITER = 10000;
+MAXITER = 1000;
 algorithm = ReconstructionAlgorithm(fstar, A, m, MAXITER);
 nAlpha = length(alphas);
 dataPenalty = NaN(1, nAlpha);
@@ -28,7 +28,7 @@ regularizationPenalty = NaN(1, nAlpha);
 for iii = 1:nAlpha
     recon = algorithm.computeReconstruction(alphas(iii));
     dataPenalty(iii) = log(norm(A*recon - m));
-    regularizationPenalty(iii) = log(norm(recon - fstar));
+    regularizationPenalty(iii) = log(norm(recon - fstar(:)));
 end
 
 end
