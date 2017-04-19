@@ -10,7 +10,6 @@ function [sparseSino, sparseRecon] = createSparseSinogram(sinogram, A)
 %   are done with ifanbeam.
 
 if isa(A, 'SystemMatrix')
-    N = A.N;
     numAngles = A.Angles;
     downscaleFactor = A.DownScaleFactor;
 else
@@ -21,14 +20,6 @@ sinoLoRes = downscaleMatrix(sinogram, downscaleFactor);
 sinoLoResSparse = sinoLoRes(:, 1:360/numAngles:360);
 sparseSino = shiftSinogram(sinoLoResSparse, numAngles);
 sparseRecon = fanbeamReconstruction(sinoLoResSparse, A);
-save(createFilePath(N, downscaleFactor, numAngles), 'sparseSino')
-end
-
-function pathstring = createFilePath(N, f, numAngles)
-% createFilePath creates the path where the data matrix will be saved. 
-components = {'data/SparseSinogram',num2str(f),'_N',...
-    num2str(N),'_Ang',num2str(numAngles)};
-pathstring  = strjoin(components, '');
 end
 
 function output = shiftSinogram(sinogram, numAngles)
