@@ -29,13 +29,44 @@ load data/InitialGuess filteredRecon
 imagesc(filteredRecon);
 
 %% Compute reconstructions with various values of alpha.
-% TO-DO
+load data/SparseData sparseSino
+load data/SystemMatrix sysmat
+nAlpha = 50;
+base = 1.2;
+aMin = 10^-4;
+aMax = 500;
+alphas = base.^linspace(log(aMin)/log(base), log(aMax)/log(base), nAlpha);
 fstar = zeros(sysmat.N);
-alphas = ones(1);
 [dataPenalty, regularizationPenalty] = computeReconstructions(...
     sysmat, sparseSino, fstar, alphas);
+save('data/Penalties', 'dataPenalty', 'regularizationPenalty', ...
+    'alphas', 'fstar');
 
-%% Produce the L-curve. 
+%% Produce the L-curve and select value of alpha. 
+penalties = load('data/Penalties');
+alphaIndex = 35;
+
 figure();
-plot(dataPenalty, regularizationPenalty);
+plot(penalties.dataPenalty, penalties.regularizationPenalty, '-');
+hold on;
+plot(penalties.dataPenalty(alphaIndex), ...
+    penalties.regularizationPenalty(alphaIndex), 'or');
+alpha = penalties.alphas(alphaIndex);
+hold off;
 
+%% Create the optimal reconstruction.
+load data/SystemMatrix sysmat
+load data/SparseData sparseSino
+penalties = load('data/Penalties');
+
+MAXITER = 1000;
+algorithm = ReconstructionAlgorithm(penalties.fstar, sysmat.Matrix, ...
+    sparseSino, MAXITER);
+optimalRecon = algorithm.computeReconstruction(alpha);
+optimalRecon = reshape(optimalRecon, sysmat.N*[1,1]);
+save('data/OptimalRecon', 'optimalRecon', 'alpha');
+
+%% Plot the optimal reconstruction. 
+optimRecon = load('data/OptimalRecon');
+imagesc(optimRecon.optimalRecon);
+colorbar;
