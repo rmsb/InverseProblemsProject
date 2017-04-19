@@ -21,10 +21,10 @@ classdef ReconstructionAlgorithm
         function ra = ReconstructionAlgorithm(fstar, A, m, MAXITER)
             if nargin > 0
              ra.fstar = fstar(:);
+             ra.m = m(:);
              ra.A = A;
              ra.AtA = A'*A;
-             ra.Atm = A'*m;
-             ra.m = m(:);
+             ra.Atm = A'*ra.m;
              ra.MAXITER = MAXITER;
             end
         end

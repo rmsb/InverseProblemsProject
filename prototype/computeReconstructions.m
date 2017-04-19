@@ -25,10 +25,13 @@ dataPenalty = NaN(1, nAlpha);
 regularizationPenalty = NaN(1, nAlpha);
 
 % Compute the reconstruction for the alpha
+iteration = 0;
 for iii = 1:nAlpha
+    fprintf('Iteration: %d.\n', iteration);
     recon = algorithm.computeReconstruction(alphas(iii));
     dataPenalty(iii) = log(norm(A*recon - m));
     regularizationPenalty(iii) = log(norm(recon - fstar(:)));
+    iteration = iteration + 1;
 end
 
 end
