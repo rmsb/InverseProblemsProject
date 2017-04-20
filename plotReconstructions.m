@@ -2,6 +2,7 @@
 filteredPriorRecon = load('data/Recon_128_prior.mat');
 zeroPriorRecon = load('data/Recon_128_zeroprior.mat');
 filteredPrior = load('data/InitialGuess');
+fbpSparseRecon = load('prototype/data/SparseData');
 
 %% Define color map axes. 
 
@@ -16,10 +17,12 @@ colorRange = [min(reconVals), max(reconVals)];
 
 recons = {filteredPriorRecon.recon;...
     zeroPriorRecon.recon;...
-    filteredPrior.filteredRecon};
+    filteredPrior.filteredRecon;...
+    fbpSparseRecon.sparseRecon};
 names = {'Reconstruction with filtered prior.',...
     'Reconstruction with zero prior.',...
-    'Filtered prior.'};
+    'Filtered prior.', ...
+    'FBP sparse angle reconstruction.'};
 
 %% Plot reconstructions with titles to separate figures.
 
