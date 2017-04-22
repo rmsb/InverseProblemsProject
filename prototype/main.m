@@ -21,7 +21,7 @@ save('data/SparseData', 'sparseSino', 'sparseRecon');
 %% Construct filtered target reconstruction. 
 load data/SparseData sparseRecon
 filteredRecon = ellipticCut(sparseRecon, [0.5, 0.51], 0.37, 0.27);
-filteredRecon = filteredImage(filteredRecon, 3, 0.1);
+filteredRecon = filteredImage(filteredRecon, 4, 0.15);
 save('data/InitialGuess', 'filteredRecon');
 
 %% View filtered target reconstruction. 
